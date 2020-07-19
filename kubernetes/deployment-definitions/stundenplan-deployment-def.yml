@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stundenplan-deployment
+  namespace: default
+  labels:
+    app: stundenplan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stundenplan-app
+  template:
+    metadata:
+      name: stundenplan-pod
+      labels:
+        app: stundenplan-app
+        type: back-end
+    spec:
+      containers:
+        - name: stundenplan-container
+          image: bsaleh/stundenplan:latest
+          env:
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: mysql-database
+                  name: mysql-secret
+
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: mysql-user
+                  name: mysql-secret
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: mysql-password
+                  name: mysql-secret
+
+            - name: DB_HOST
+              value: "mysql-service"
+
+            - name: DB_PORT
+              value: "3306"
+
+            - name: MAILER_TRANSPORT
+              value: "gmail"
+
+            - name: MAILER_HOST
+              value: "smtp.gmail.com"
+
+            - name: MAILER_USER
+              valueFrom:
+                secretKeyRef:
+                  key: MAILER_USER
+                  name: stundenplan-secret
+
+            - name: MAILER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: MAILER_PASSWORD
+                  name: stundenplan-secret
+
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: SECRET
+                  name: stundenplan-secret
+
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - mountPath: /var/www/stundenplan/
+              name: stundenplan-volume
+              readOnly: false
+
+
+      volumes:
+        - name: stundenplan-volume
+          persistentVolumeClaim:
+            claimName: nfs

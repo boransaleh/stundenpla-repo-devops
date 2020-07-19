@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver-deployment
+  namespace: default
+  labels:
+    app: stundenplan-webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stundenplan-webserver
+
+  template:
+    metadata:
+      name: webserver-pod
+      labels:
+        app: stundenplan-webserver
+        type: front-end
+    spec:
+      containers:
+        - name: webserver
+          image: bsaleh/nginx:latest
+          env:
+            - name: SERVER_NAME
+              value: "_"
+            - name: APP_ROOT
+              value: "/var/www/stundenplan/web"
+            - name: API_HOST
+              value: "stundenplan-service"
+            - name: API_PORT
+              value: "9000"
+          volumeMounts:
+            - mountPath: /var/www/stundenplan
+              name: stundenplan-volume
+      volumes:
+        - name: stundenplan-volume
+          persistentVolumeClaim:
+            claimName: stundenplan-claim

@@ -1,0 +1,10 @@
+---
+- name: create deployment for webserver
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/deployment-definitions/nginx-deployment-definition.yml') }}"
+
+- name: create service for webserver
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/service-definitions/webserver-service-definition.yml') }}"

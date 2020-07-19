@@ -1,0 +1,25 @@
+---
+- name: Copy file with owner and permissions
+  copy:
+    src: "{{playbook_dir}}/includes/nginx/"
+    dest: /tmp/nginx/
+    owner: root
+    group: root
+    mode: '0777'
+
+- name: Build an nginx image and push it to repo
+  docker_image:
+    path: "/tmp/nginx/"
+    name: nginx-webserver
+
+- name: Log into DockerHub
+  docker_login:
+      username: "{{docker_username}}"
+      password: "{{docker_password}}"
+
+- name: Tag and push to docker hub
+  docker_image:
+     name: nginx-webserver:latest
+     repository: bsaleh/nginx
+     tag: v1
+     push: yes

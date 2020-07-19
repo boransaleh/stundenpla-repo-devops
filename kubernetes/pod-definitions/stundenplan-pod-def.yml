@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: stundenplan-pod
+  labels:
+    app: stundenplan-app
+    type: back-end
+spec:
+  containers:
+    - name: stundenplan-container
+      image: bsaleh/stundenplan:latest

@@ -1,0 +1,15 @@
+---
+- name: create pvc for nfs
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/PVC-definitions/nfs-pvc-def.yml') }}"
+
+- name: create deployment for nfs
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/deployment-definitions/nfs-server-deployment-def.yml') }}"
+
+- name: create service for nfs
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/service-definitions/nfs-server-service-def.yml') }}"

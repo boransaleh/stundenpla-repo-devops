@@ -1,0 +1,25 @@
+---
+- name: create storageClass for mysql
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/storageClasses-definition/google-storage-def.yml') }}"
+
+- name: create PVC for mysql
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/PVC-definitions/mysql-pvc-def.yml') }}"
+
+- name: create secret for mysql
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/secret-definitions/mysql-secret.yml') }}"
+
+- name: create deployment for mysql
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/deployment-definitions/mysql-deployment-def.yml') }}"
+
+- name: create service for mysql
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/service-definitions/mysql-service-definition.yml') }}"

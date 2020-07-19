@@ -1,0 +1,15 @@
+---
+- name: create secret for stundenplan
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/secret-definitions/stundenplan-secret.yml') }}"
+
+- name: create deployment for stundenplan
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/deployment-definitions/stundenplan-deployment-def.yml') }}"
+
+- name: create service for stundenplan
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/service-definitions/stundenplan-service-definition.yml') }}"

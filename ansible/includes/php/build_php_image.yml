@@ -1,0 +1,25 @@
+---
+- name: Copy file with owner and permissions
+  copy:
+    src: "{{playbook_dir}}/includes/php/"
+    dest: /tmp/php/
+    owner: root
+    group: root
+    mode: '0777'
+
+- name: Build an php image and push it to repo
+  docker_image:
+    path: "/tmp/php/"
+    name: stundenplan
+
+- name: Log into DockerHub
+  docker_login:
+    username: "{{docker_username}}"
+    password: "{{docker_password}}"
+
+- name: Tag and push to docker hub
+  docker_image:
+    name: stundenplan:latest
+    repository: bsaleh/stundenplan
+    tag: v1
+    push: yes

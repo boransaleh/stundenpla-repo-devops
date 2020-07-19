@@ -1,0 +1,4 @@
+# docker run -d --name nginx --hostname webserver --env SERVER_NAME="_" --env APP_ROOT="/var/www/stundenplan/web"  --env API_HOST=php --env API_PORT=9000 --link php -v stundenplan_volume:/var/www/stundenplan ad086a84e68a
+# docker run -d --name mysql_database --hostname db -e MYSQL_USER=root -e MYSQL_PASSWORD=Muntaha@0599 -e MYSQL_DATABASE=stundenplan -p 3306:3306  -v mysql_volume:/var/lib/mysql mysql:5.6
+# docker run -d --name php --hostname php  -e DB_HOST=db -e DB_PORT=3306 -e DB_DATABASE=stundenplan -e DB_USER=root -e DB_PASSWORD=Muntaha@0599 -e MAILER_TRANSPORT=gmail -e MAILER_HOST=smtp.gmail.com -e MAILER_USER=boran.alsaleh@gmail.com -e MAILER_PASSWORD=xxx -e SECRET=Boran1987 --link mysql_database  -v stundenplan_volume:/var/www/stundenplan
+# USE mysql; Update user set host='%' where user='root@localhost'; FLUSH PRIVILEGES;
