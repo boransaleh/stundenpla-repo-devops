@@ -14,8 +14,8 @@ spec:
     path: "/"
 
 ---
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
   name: nfs
   namespace: default

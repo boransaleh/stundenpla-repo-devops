@@ -6,7 +6,7 @@ metadata:
   labels:
     app: stundenplan
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: stundenplan-app
@@ -20,6 +20,10 @@ spec:
       containers:
         - name: stundenplan-container
           image: bsaleh/stundenplan:latest
+          securityContext:
+           runAsUser: 0
+           runAsGroup: 0
+           fsGroup: 0
           env:
             - name: DB_DATABASE
               valueFrom:
@@ -72,10 +76,12 @@ spec:
           ports:
             - containerPort: 9000
           volumeMounts:
-            - mountPath: /var/www/stundenplan/
+            - mountPath: "/app/"
               name: stundenplan-volume
-              readOnly: false
-
+          lifecycle:
+            postStart:
+              exec: 
+               command: ["/bin/sh", "-c", "cp -rf /var/www/stundenplan/* /app/"] 
 
       volumes:
         - name: stundenplan-volume

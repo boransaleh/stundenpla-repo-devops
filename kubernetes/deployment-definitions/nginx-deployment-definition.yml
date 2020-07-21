@@ -31,9 +31,9 @@ spec:
             - name: API_PORT
               value: "9000"
           volumeMounts:
-            - mountPath: /var/www/stundenplan
+            - mountPath: "/var/www/stundenplan"
               name: stundenplan-volume
       volumes:
         - name: stundenplan-volume
           persistentVolumeClaim:
-            claimName: stundenplan-claim
+            claimName: nfs

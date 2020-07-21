@@ -15,7 +15,9 @@ spec:
     spec:
       containers:
         - name: nfs-server
-          image: gcr.io/google_containers/volume-nfs:0.8
+          image: cpuguy83/nfs-server
+          securityContext:
+              privileged: true
           ports:
             - name: nfs
               containerPort: 2049
@@ -23,9 +25,6 @@ spec:
               containerPort: 20048
             - name: rpcbind
               containerPort: 111
-          securityContext:
-            runAsNonRoot: true
-
           args:
             # Pass the paths to share to the Docker image
             - /exports

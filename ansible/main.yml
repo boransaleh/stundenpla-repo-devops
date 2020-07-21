@@ -16,4 +16,4 @@
 #    - include: ./includes/kubernetes/mysql-service/mysql-service.yml
     - include: ./includes/kubernetes/nfs-service/nfs-service.yml
     - include: ./includes/kubernetes/stundenplan-service/stundenplan-service.yml
-#    - include: ./includes/kubernetes/webserver-service/webserver-service.yml
+    - include: ./includes/kubernetes/webserver-service/webserver-service.yml
