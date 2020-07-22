@@ -57,12 +57,26 @@ spec:
           ports:
             - containerPort: 3306
               name: mysql
-
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: mysql-persistent-storage
-
+          #command: ['mysql', '-u$MYSQL_USER', '-p$MYSQL_ROOT_PASSWORD', '-D','$MYSQL_DATABASE', '<', '/tmp/initdb.sql']
+      initContainers:
+        - name: init-mydb
+          image: busybox:1.28
+          env:
+            - name: MYSQL_DUMP
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-initdb-config
+                  key: initdb.sql
+          volumeMounts:
+            - mountPath: /tmp
+              name: mysql-persistent-storage
+          command: ['sh', '-c', "cat", "/tmp/initdb.sql" ,">", "$MYSQL_DUMP"]
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
             claimName: mysql-claim
+
+

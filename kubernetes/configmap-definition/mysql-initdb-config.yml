@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-initdb-config
+  namespace: default
 data:
   initdb.sql: |
     SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";

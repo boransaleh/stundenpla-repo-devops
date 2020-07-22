@@ -14,6 +14,11 @@
     state: present
     definition: "{{ lookup('file', '../../../../kubernetes/secret-definitions/mysql-secret.yml') }}"
 
+- name: create sql dump configmap for mysql
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/configmap-definition/mysql-initdb-config.yml') }}"
+
 - name: create deployment for mysql
   k8s:
     state: present
