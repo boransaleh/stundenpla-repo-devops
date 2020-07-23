@@ -60,23 +60,21 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: mysql-persistent-storage
-          #command: ['mysql', '-u$MYSQL_USER', '-p$MYSQL_ROOT_PASSWORD', '-D','$MYSQL_DATABASE', '<', '/tmp/initdb.sql']
-      initContainers:
-        - name: init-mydb
-          image: busybox:1.28
-          env:
-            - name: MYSQL_DUMP
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-initdb-config
-                  key: initdb.sql
-          volumeMounts:
-            - mountPath: /tmp
-              name: mysql-persistent-storage
-          command: ['sh', '-c', "cat", "/tmp/initdb.sql" ,">", "$MYSQL_DUMP"]
+            - mountPath: /tmp/initdb.sql
+              subPath: initdb.sql
+              name: mysql-dump
+              readOnly: false
+#          lifecycle:
+#            postStart:
+#              exec:
+#                command: ['mysql', '-u$MYSQL_USER', '-p$MYSQL_ROOT_PASSWORD','$MYSQL_DATABASE', '<', '/tmp/initdb.sql'] i should create a job for this command with init container busybox  which waits until i get response from service
+
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
             claimName: mysql-claim
+        - name: mysql-dump
+          configMap:
+            name: mysql-initdb-config
 
 

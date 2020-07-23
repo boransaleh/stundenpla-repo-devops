@@ -9,6 +9,7 @@
     - include: ./includes/install-private-ssh-key/install-private-ssh-key.yml
 
 - hosts: gcp_root
+  gather_facts: no
   vars_files:
     - ./vars/vault.yml
 #  roles:
