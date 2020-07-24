@@ -80,8 +80,10 @@ spec:
               name: stundenplan-volume
           lifecycle:
             postStart:
-              exec: 
-               command: ["/bin/sh", "-c", "cp -rf /var/www/stundenplan/* /app/"] 
+              exec:
+                command:
+
+               #command: ["/bin/sh", "-c", "cp - rf /var/www/stundenplan/* /app/"]
 
       volumes:
         - name: stundenplan-volume

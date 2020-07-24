@@ -28,3 +28,7 @@
   k8s:
     state: present
     definition: "{{ lookup('file', '../../../../kubernetes/service-definitions/mysql-service-definition.yml') }}"
+- name: import data mysql
+  k8s:
+    state: present
+    definition: "{{ lookup('file', '../../../../kubernetes/jobs-definition/mysql-dump-job.yml') }}"

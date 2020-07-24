@@ -1,32 +1,21 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: mysql-deployment
-  namespace: default
-  labels:
-    app: stundenplan-mysql
+     name: mysql-dump
+     namespace: default
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: stundenplan-mysql
-
   template:
     metadata:
-      name: stundenplan-data
-      labels:
-        app: stundenplan-mysql
+      name: import-mysql
     spec:
+      restartPolicy: Never
+      initContainers:
+        - name: init-mydb
+          image: busybox:1.28
+          command: ['sh', '-c', "until nslookup mysql-service.default.svc.cluster.local; do echo waiting for mydb; sleep 2; done"]
       containers:
-        - name: stundenplan-mysql
+        - name: mysql-dump
           image: mysql:5.6.48
-          resources:
-            limits:
-              cpu: 2
-              memory: "2Gi"
-            requests:
-              cpu: 2
-              memory: "2Gi"
           env:
             - name: MYSQL_USER
               valueFrom:
@@ -43,6 +32,9 @@ spec:
             - name: MYSQL_ROOT_HOST
               value: "%"
 
+            - name: MYDB_HOST
+              value: "mysql-service"
+
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -54,32 +46,16 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: mysql-database
-          ports:
-            - containerPort: 3306
-              name: mysql
+          command:
+            - "bash"
+            - "-c"
+            - 'mysql -u${MYSQL_USER} -p${MYSQL_ROOT_PASSWORD} -h ${MYDB_HOST} ${MYSQL_DATABASE} < /tmp/initdb.sql'
           volumeMounts:
-            - mountPath: /var/lib/mysql
-              name: mysql-persistent-storage
             - mountPath: /tmp/initdb.sql
               subPath: initdb.sql
               name: mysql-dump
               readOnly: false
-          readinessProbe:
-            exec:
-              command:
-                - "bash"
-                - "-c"
-                - 'mysql -u${MYSQL_USER} -p${MYSQL_ROOT_PASSWORD} -e "use ${MYSQL_DATABASE}"'
-            initialDelaySeconds: 5
-            periodSeconds: 2
-            timeoutSeconds: 1
-
       volumes:
-        - name: mysql-persistent-storage
-          persistentVolumeClaim:
-            claimName: mysql-claim
         - name: mysql-dump
           configMap:
             name: mysql-initdb-config
-
-
