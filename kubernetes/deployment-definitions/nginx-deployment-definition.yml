@@ -6,7 +6,7 @@ metadata:
   labels:
     app: stundenplan-webserver
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: stundenplan-webserver
@@ -18,6 +18,10 @@ spec:
         app: stundenplan-webserver
         type: front-end
     spec:
+      initContainers:
+        - name: check-service
+          image: busybox:1.28
+          command: ['sh', '-c', "until nslookup stundenplan-service.default.svc.cluster.local; do echo waiting for php-fpm; sleep 2; done"]
       containers:
         - name: webserver
           image: bsaleh/nginx:latest
@@ -31,8 +35,10 @@ spec:
             - name: API_PORT
               value: "9000"
           volumeMounts:
-            - mountPath: "/var/www/stundenplan"
+            - mountPath: "/stundenplan"
               name: stundenplan-volume
+          command: ["/bin/sh", "-c", 'mkdir -p /var/www/stundenplan && cp -rf /stundenplan/*  /var/www/stundenplan/']
+
       volumes:
         - name: stundenplan-volume
           persistentVolumeClaim:
