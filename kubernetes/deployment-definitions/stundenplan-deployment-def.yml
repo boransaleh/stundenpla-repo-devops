@@ -78,12 +78,11 @@ spec:
           volumeMounts:
             - mountPath: "/app/"
               name: stundenplan-volume
+
           lifecycle:
             postStart:
               exec:
-                command:
-
-               #command: ["/bin/sh", "-c", "cp - rf /var/www/stundenplan/* /app/"]
+               command: ["/bin/sh", "-c", 'if [ "$(diff -qr /var/www/stundenplan/  /app/  -x "*.git" -x "*.idea" -x "*.web-server-pid")" != "" ]; then  cp -rf /var/www/stundenplan/* /app/;  fi']
 
       volumes:
         - name: stundenplan-volume
