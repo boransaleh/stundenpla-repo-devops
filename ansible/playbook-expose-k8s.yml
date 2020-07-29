@@ -1,0 +1,8 @@
+---
+- hosts: gcp_root
+  gather_facts: no
+  vars_files:
+    - ./vars/vault.yml
+  tasks:
+    - include: ./includes/kubernetes/mysql-service/mysql-service.yml
+    - include: ./includes/kubernetes/stundenplan-service/stundenplan-service.yml

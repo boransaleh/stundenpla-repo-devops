@@ -1,0 +1,8 @@
+---
+- hosts: gcp_root
+  gather_facts: no
+  vars_files:
+    - ./vars/vault.yml
+  tasks:
+    - include: ./includes/nginx/build_nginx_image.yml
+    - include: ./includes/php/build_php_image.yml

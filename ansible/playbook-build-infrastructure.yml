@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  vars_files:
+    - ./vars/vault.yml
+  connection: local
+  roles:
+    - init-cluster
+  tasks:
+    - include: ./includes/install-private-ssh-key/install-private-ssh-key.yml
+- hosts: gcp_root
+  vars_files:
+    - ./vars/vault.yml
+  roles:
+    - install-gcloud
+  tasks:
+    - include: ./includes/install-docker/install_docker.yml

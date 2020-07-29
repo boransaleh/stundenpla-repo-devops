@@ -11,6 +11,7 @@
   docker_image:
     path: "/tmp/nginx/"
     name: nginx-webserver
+    nocache: yes
 
 - name: Log into DockerHub
   docker_login:

@@ -1,12 +1,12 @@
 ---
-- hosts: localhost
-  vars_files:
-      - ./vars/vault.yml
+#- hosts: localhost
+#  vars_files:
+#      - ./vars/vault.yml
 #  connection: local
 #  roles:
 #    - init-cluster
-  tasks:
-    - include: ./includes/install-private-ssh-key/install-private-ssh-key.yml
+#  tasks:
+#    - include: ./includes/install-private-ssh-key/install-private-ssh-key.yml
 
 - hosts: gcp_root
   gather_facts: no
@@ -16,7 +16,7 @@
 #    - install-gcloud
   tasks:
 #    - include: ./includes/install-docker/install_docker.yml
-#    - include: ./includes/nginx/build_nginx_image.yml
+    - include: ./includes/nginx/build_nginx_image.yml
 #    - include: ./includes/php/build_php_image.yml
 #    - include: ./includes/kubernetes/mysql-service/mysql-service.yml
     - include: ./includes/kubernetes/stundenplan-service/stundenplan-service.yml
