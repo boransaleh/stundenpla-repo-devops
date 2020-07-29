@@ -4,10 +4,10 @@ metadata:
   name: stundenplan-service
   namespace: default
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
-    - port: 9000
-      targetPort: 9000
+    - port: 80
+      targetPort: 80
   selector:
     app: stundenplan-app
-    type: back-end
+    type: front-end

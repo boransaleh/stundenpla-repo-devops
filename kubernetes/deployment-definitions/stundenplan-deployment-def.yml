@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: stundenplan-deployment
   namespace: default
@@ -15,7 +15,7 @@ spec:
       name: stundenplan-pod
       labels:
         app: stundenplan-app
-        type: back-end
+        type: front-end
     spec:
       containers:
         - name: stundenplan-container
@@ -76,8 +76,8 @@ spec:
           ports:
             - containerPort: 9000
           volumeMounts:
-            - mountPath: "/app/"
-              name: stundenplan-volume
+            - mountPath: "/code"
+              name: stundenplan-data
           readinessProbe:
             tcpSocket:
               port: 9000
@@ -87,9 +87,24 @@ spec:
           lifecycle:
             postStart:
               exec:
-               command: ["/bin/sh", "-c", 'if [ "$(diff -qr /var/www/stundenplan/  /app/  -x "*.git" -x "*.idea" -x "*.web-server-pid")" != "" ]; then  cp -rf /var/www/stundenplan/* /app/;  fi']
+               command: ["/bin/sh", "-c", 'cp -rfp /var/www/stundenplan/* /code']
+
+        - name: webserver
+          image: bsaleh/nginx:latest
+          env:
+            - name: SERVER_NAME
+              value: "_"
+            - name: APP_ROOT
+              value: "/code/web"
+            - name: API_HOST
+              value: "localhost"
+            - name: API_PORT
+              value: "9000"
+          volumeMounts:
+            - mountPath: "/code"
+              name: stundenplan-data
 
       volumes:
-        - name: stundenplan-volume
-          persistentVolumeClaim:
-            claimName: nfs
+        - name: stundenplan-data
+          hostPath:
+            path: /tmp/code
