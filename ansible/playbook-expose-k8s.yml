@@ -1,6 +1,5 @@
 ---
 - hosts: gcp_root
-  gather_facts: no
   vars_files:
     - ./vars/vault.yml
   tasks:
