@@ -94,6 +94,7 @@
        - mkdir -p /home/vagrant/.kube
        - cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/config
        - chown vagrant:vagrant /home/vagrant/.kube/config
+       - chown vagrant:vagrant /home/vagrant/.kube
 
   - name: Install calico pod network
     become: false
@@ -109,7 +110,5 @@
   handlers:
        - name: docker status
          service: name=docker state=started
-
-
 
 
