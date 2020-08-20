@@ -9,6 +9,7 @@ Vagrant.configure("2") do |config|
         v.cpus = 4
     end
 
+
     config.vm.define "k8s-master" do |node|
                 node.vm.box = IMAGE_NAME
                 node.vm.network "private_network", ip: "192.168.50.10"
@@ -28,6 +29,7 @@ Vagrant.configure("2") do |config|
                 end
             end
 
+
     (1..N).each do |i|
         config.vm.define "node-#{i}" do |node|
             node.vm.box = IMAGE_NAME
@@ -46,5 +48,24 @@ Vagrant.configure("2") do |config|
                 }
             end
         end
+
+    config.vm.define "jump-server" do |node|
+                        node.vm.box = "debian/stretch64"
+                        node.vm.network "private_network", ip: "192.168.50.9"
+                        node.vm.hostname = "jump-server"
+                        node.vm.provision "ansible" do |ansible|
+                            ansible.groups = {
+                               'server-node' => ['jump-server']
+                            }
+                            ansible.sudo = true
+                            ansible.limit = 'all'
+                            ansible.verbose = true
+                            ansible.playbook = "./includes/install-docker/install_docker.yml"
+                            ansible.extra_vars = {
+                                node_ip: "192.168.50.9",
+                                ansible_sudo_pass: "1",
+                            }
+              end
+          end
     end
 end

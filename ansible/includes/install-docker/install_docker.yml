@@ -1,49 +1,52 @@
 ---
-- name: Update the apt package index
-  become: yes
-  apt:
-    name: "*"
-    state: latest
-    update_cache: yes
-    force_apt_get: yes
-- name: Install packages for apt add repository over HTTPS
-  become: yes
-  apt:
-    name: "{{ packagesdep }}"
-    force_apt_get: yes
-    state: latest
-    update_cache: yes
-  vars:
-    packagesdep:
-      - git
-      - apt-transport-https
-      - ca-certificates
-      - wget
-      - software-properties-common
-      - gnupg2
-      - curl
-      - python-setuptools
-      - python-pip
-      - python-backports.ssl-match-hostname
-- name: Add Apt signing key from official docker repo
-  apt_key:
-    url: https://download.docker.com/linux/debian/gpg
-    state: present
-- name: add docker official repository for Debian Stretch
-  apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
-    state: present
-- name: Index new repo into the cache
-  become: yes
-  apt:
-    name: "*"
-    state: latest
-    update_cache: yes
-    force_apt_get: yes
-- name: actually install docker
-  apt:
-    name: "docker-ce"
-    state: latest
-- name: Install Docker Module for Python
-  pip:
-      name: docker
+- hosts: server-node
+  become: true
+  tasks:
+  - name: Update the apt package index
+    become: yes
+    apt:
+      name: "*"
+      state: latest
+      update_cache: yes
+      force_apt_get: yes
+  - name: Install packages for apt add repository over HTTPS
+    become: yes
+    apt:
+      name: "{{ packagesdep }}"
+      force_apt_get: yes
+      state: latest
+      update_cache: yes
+    vars:
+      packagesdep:
+        - git
+        - apt-transport-https
+        - ca-certificates
+        - wget
+        - software-properties-common
+        - gnupg2
+        - curl
+        - python-setuptools
+        - python-pip
+        - python-backports.ssl-match-hostname
+  - name: Add Apt signing key from official docker repo
+    apt_key:
+      url: https://download.docker.com/linux/debian/gpg
+      state: present
+  - name: add docker official repository for Debian Stretch
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+      state: present
+  - name: Index new repo into the cache
+    become: yes
+    apt:
+      name: "*"
+      state: latest
+      update_cache: yes
+      force_apt_get: yes
+  - name: actually install docker
+    apt:
+      name: "docker-ce"
+      state: latest
+  - name: Install Docker Module for Python
+    pip:
+        name: docker
