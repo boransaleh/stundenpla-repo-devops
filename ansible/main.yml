@@ -15,7 +15,7 @@
 #  roles:
 #    - install-gcloud
   tasks:
-#    - include: ./includes/install-docker/install_docker.yml
+#    - include: ./includes/configure-infrastructure/jump-server-configure.yml
     - include: ./includes/nginx/build_nginx_image.yml
 #    - include: ./includes/php/build_php_image.yml
 #    - include: ./includes/kubernetes/mysql-service/mysql-service.yml

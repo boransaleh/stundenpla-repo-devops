@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
                     ansible.sudo = true
                     ansible.limit = 'all'
                     ansible.verbose = true
-                    ansible.playbook = "master-playbook.yml"
+                    ansible.playbook = "./includes/configure-infrastructure/master-playbook.yml"
                     ansible.extra_vars = {
                         node_ip: "192.168.50.10",
                         ansible_sudo_pass: "1",
@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
                 ansible.sudo = true
                 ansible.limit = 'all'
                 ansible.verbose = true
-                ansible.playbook = "node-playbook.yml"
+                ansible.playbook = "./includes/configure-infrastructure/node-playbook.yml"
                 ansible.extra_vars = {
                     node_ip: "192.168.50.#{i + 10}",
                 }
@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
                             ansible.sudo = true
                             ansible.limit = 'all'
                             ansible.verbose = true
-                            ansible.playbook = "./includes/install-docker/install_docker.yml"
+                            ansible.playbook = "./includes/configure-infrastructure/jump-server-configure.yml"
                             ansible.extra_vars = {
                                 node_ip: "192.168.50.9",
                                 ansible_sudo_pass: "1",

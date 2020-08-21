@@ -1,0 +1,1 @@
+kubeadm join 192.168.50.10:6443 --token raayki.2ayj0czg4v5j5gte     --discovery-token-ca-cert-hash sha256:4ca849ffe47f4f0b8097198676bbf3781ea6b3cfcfaf88b5852eaebf371682f4 

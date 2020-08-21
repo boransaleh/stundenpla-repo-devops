@@ -32,6 +32,7 @@
     apt_key:
       url: https://download.docker.com/linux/debian/gpg
       state: present
+
   - name: add docker official repository for Debian Stretch
     apt_repository:
       repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
@@ -50,3 +51,39 @@
   - name: Install Docker Module for Python
     pip:
         name: docker
+
+
+  - name: Add Apt signing key from official k8s kubectl repo
+    apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      state: present
+
+  - name: add k8s official repository for Debian
+    apt_repository:
+      repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+      state: present
+  - name: Run the equivalent of "apt-get update"
+    apt:
+      update_cache: yes
+
+  - name: Install packages for apt add repository over HTTPS
+    become: yes
+    apt:
+      name: kubectl
+      force_apt_get: yes
+      state: latest
+      update_cache: yes
+
+  - name: ansible create directory example
+    file:
+        path: /home/vagrant/.kube
+        state: directory
+
+  - name: setup kubectl config
+    copy: src="kubeconfig/k8s-master/home/vagrant/.kube/config" dest=/home/vagrant/.kube/config
+
+  - name: Setup kubeconfig for vagrant user
+    command: "{{ item }}"
+    with_items:
+      - chown vagrant:vagrant /home/vagrant/.kube/config
+      - chown vagrant:vagrant /home/vagrant/.kube
