@@ -1,32 +1,3 @@
-source_key: gcp_pv_key
-dest_key: ~/.ssh/gcp_pv_key
-ssh_key: |
-  -----BEGIN RSA PRIVATE KEY-----
-  MIIEpAIBAAKCAQEAvQ8wW3QIntxDujnaraQX0h4uoJA+P3xTcjoKbJ7lcgcnMNFN
-  ncKERPnQXE1CegLdtsGcEZt6XDHn1p8bRiX1d0jdGY1h8WZLMBAqyDypASz+a3So
-  Z9ksuTuvgTGAJ/tKRPZ+SSNO3XMWUBE0gdRChbQUQypHR1d4snWjZAxLyCqVeg4g
-  vZOyb1SUJaMBeGVBcgpLS4DjYFCAfCBMcpdVjTtZlrFOaqJFnA9loQBwXrLVthVh
-  bLccyjNYnxoak4B+moH0zAKtK+NG4DFGIpzkTLmaR8isrtjNVgONhFO6qr1aDBjg
-  kBCJb1wAs6NheMat2KS7iNPfXgdU34vjEAtR+QIDAQABAoIBAACaWMwh3ZksGKcy
-  YgkludG4uOtYKmqnadi2aKwaAZ9QeIaGVFoJccSKi2iP8oNTGQPpMCc6OLSskBG2
-  Ji8eFd9Qgyv+sG5Fpj27/3buApf3XcRX9eWG4sagcxnVX5RBD+aSZqqzCyBXqp2M
-  wH8dfyzP+zSPoPSQSdk/2MqL433662HhMtvfzGUwMZ/TYCc6CtChGtIS84lcWEVM
-  Dh6UINPWb5qokOBy7nXIhYr5wb0lJvgTcjarqft37jmJAV+Ow815ty0F4ALj4gzg
-  CPujWTbc9Es8Za/qqGJKeCGHquuPvGSKlHiG4oWRZDYjiFlM1bqDTJEAVJZynQSr
-  In3DAzUCgYEA3kQYy+OJlW3xCVgzgCtsz33cooe+Fmnzu0ApIs6BTDw4T51o11oG
-  xvYgV4Y1uALbnL9pj0YjjrVSOmGl2rvXyNu/uN4yyc7sosCxKMJ9dRedbyjbSFMl
-  DcUCHDi/dpErbkg5JLGzyShrLS0as56giDrvdKSnOMVCgKGgLJwRBV8CgYEA2cDi
-  DbgpoU8PQUkmCb/eq+ztahOoVIq33PIS0x9+4O/sczKk5oLBk9INRxCgMveIsLjr
-  KPln4m+gk0ISXv/pL/BYGLpOAkXR97YOX+taaNLpwYxR7SkPPwRS/ihN5YDhmCI5
-  IqCuwiwZhHvSzK3UC3ez9HTWMA4ccyGPpqgHz6cCgYA+OfpnOrDOMRWGdDcW7xFr
-  leUra62AQPGHvxLFN+NjIIjzYTJ0+DNliIrNdjmb5tDtNXmsLwrNbV40EhqI/oYP
-  KdanPy4g6dm+RwxSSQEuwwnEkT+zI/P/wuQwWoLgAwyRt46oA0g+TR6Ua0hKeWKg
-  QT/A/EgE0NUphhZ95sOtKQKBgQCtwkSgPfy6Q6QgrIY18W12M7Gfm+AO1kKxhFmR
-  LujIBavgoOEFMAHYOx1tP88V3ICuxGCiaaKEBh9UYrzWIc+p+VfTI5dsKNrLl/MQ
-  h3W1f9gYIiid3s3Ts1emh/Lg2F8sTuLYxu+s8hPKrCQiP/Oc0wA+aZ0g66G4HWfL
-  zPmusQKBgQDSWoFrMFpWFcX0eYhnKS5CG1OfYNnJwNG132pnXDvf5BgUHVnIhLhC
-  VjHzOP8NhAtxoJyJJ9FjZWQN1jSvfU/DQQOnNLtbK/4I6VL+GwSMj/WhrfVjl2Z9
-  WI7pas/7+hbsds0a1tFzXOFOHVVbsBdwBvg8tl7pW3dHLpcYEhTVfQ==
-  -----END RSA PRIVATE KEY-----
+ssh_user: "vagrant"
 docker_username: bsaleh
 docker_password: Feras@0599
