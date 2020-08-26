@@ -28,6 +28,10 @@
         - python-setuptools
         - python-pip
         - python-backports.ssl-match-hostname
+        - nfs-kernel-server
+        - nfs-common
+        - portmap
+        - firewalld
   - name: Add Apt signing key from official docker repo
     apt_key:
       url: https://download.docker.com/linux/debian/gpg
@@ -51,7 +55,6 @@
   - name: Install Docker Module for Python
     pip:
         name: docker
-
 
   - name: Add Apt signing key from official k8s kubectl repo
     apt_key:
@@ -87,3 +90,46 @@
     with_items:
       - chown vagrant:vagrant /home/vagrant/.kube/config
       - chown vagrant:vagrant /home/vagrant/.kube
+
+  - name: Create the directory that will be shared by NFS
+    file:
+      path: /srv/nfs/kubedata
+      state: directory
+
+  - name: change the permissions of Nfs Shared
+    command: "{{ item }}"
+    with_items:
+      - chmod -R 755 /srv/nfs/kubedata
+      - chown nobody:nogroup /srv/nfs/kubedata
+
+  - name: configure export nfs
+    lineinfile:
+      dest: /etc/exports
+      line: "/srv/nfs/kubedata *(rw,sync,no_subtree_check,no_root_squash,no_all_squash,insecure)"
+
+  - name: run exportfs command
+    command: exportfs -rav
+    notify:
+    - restart nfs server
+
+  - name: open nfs port
+    firewalld:
+      service: nfs
+      zone: public
+      permanent: yes
+      state: enabled
+    vars:
+        ansible_python_interpreter: '/usr/bin/python3'
+    notify:
+      - restart firewalld
+
+  handlers:
+    - name: restart nfs server
+      service:
+        name: nfs-server
+        state: restarted
+    - name: restart firewalld
+      service:
+       name: firewalld
+       state: restarted
+

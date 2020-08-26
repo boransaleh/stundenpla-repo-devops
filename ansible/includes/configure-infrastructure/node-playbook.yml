@@ -89,6 +89,9 @@
   - name: Join the node to cluster
     command: sh /tmp/join-command.sh
 
+  - name: mount to NFS shared
+    command: mount -t nfs 192.168.50.9:/srv/nfs/kubedata /mnt
+
   handlers:
         - name: docker status
           service: name=docker state=started
