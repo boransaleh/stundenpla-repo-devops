@@ -3,4 +3,6 @@ kind: StorageClass
 metadata:
   name: mysql-storage
   namespace: default
-provisioner: kubernetes.io/gce-pd
+provisioner: fuseim.pri/ifs
+parameters:
+  archiveOnDelete: "false"

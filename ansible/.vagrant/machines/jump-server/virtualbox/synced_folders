@@ -1,1 +1,1 @@
-{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/root/PhpstormProjects/devops-k8s/ansible","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/bsa/Schreibtisch/DevOps/devops-project/ansible","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

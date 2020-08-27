@@ -2,7 +2,7 @@
 - name: create storageClass for mysql
   k8s:
     state: present
-    definition: "{{ lookup('file', '../../../../kubernetes/storageClasses-definition/google-storage-def.yml') }}"
+    definition: "{{ lookup('file', '../../../../kubernetes/storageClasses-definition/storage-class-def.yml') }}"
 
 - name: create PVC for mysql
   k8s:

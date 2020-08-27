@@ -1,0 +1,27 @@
+---
+- name: clone NFS client provisioner
+  git:
+    repo: https://github.com/kubernetes-incubator/external-storage
+    dest: /tmp/k8s
+    force: no
+
+- name: install rbac nfs client
+  k8s:
+    state: present
+    src: /tmp/k8s/nfs-client/deploy/rbac.yaml
+
+- name: Template NFS client provisioner
+  template:
+    src: "{{role_path}}/templates/deployment.j2"
+    dest: /tmp/k8s/nfs-client/deploy/deployment.yaml
+    force: yes
+
+- name: deploy nfs client in k8s
+  k8s:
+    state: present
+    src: /tmp/k8s/nfs-client/deploy/deployment.yaml
+
+- name : remove  NFS client provisioner files
+  file:
+    path: /tmp/k8s
+    state: absent

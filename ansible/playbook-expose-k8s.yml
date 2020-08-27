@@ -1,7 +1,9 @@
 ---
-- hosts: gcp_root
+- hosts: server-node
   vars_files:
     - ./vars/vault.yml
+#  roles:
+#    - nfs-provisioner
   tasks:
     - include: ./includes/kubernetes/mysql-service/mysql-service.yml
-    - include: ./includes/kubernetes/stundenplan-service/stundenplan-service.yml
+#    - include: ./includes/kubernetes/stundenplan-service/stundenplan-service.yml

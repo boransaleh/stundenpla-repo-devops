@@ -1,0 +1,2 @@
+NFS_SERVER: 192.168.50.9
+NFS_PATH : /srv/nfs/kubedata
