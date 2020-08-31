@@ -32,6 +32,13 @@
         - nfs-common
         - portmap
         - firewalld
+
+  - name: install openshift and pyyaml module
+    pip:
+      name:
+        - openshift
+        - pyyaml
+
   - name: Add Apt signing key from official docker repo
     apt_key:
       url: https://download.docker.com/linux/debian/gpg
